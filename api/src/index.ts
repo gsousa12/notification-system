@@ -1,6 +1,4 @@
-import fastify from "fastify";
-
-const server = fastify();
+import { server } from "./server";
 
 server.get("/ping", async (request, reply) => {
   return "oi\n";

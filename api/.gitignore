@@ -26,9 +26,13 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
+# Ignora a pasta dist (arquivos compilados do TypeScript)
+dist/
+
 # Dependency directories
 node_modules
 jspm_packages
+.env
 
 # Optional npm cache directory
 .npm
