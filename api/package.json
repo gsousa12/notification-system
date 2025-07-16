@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node src/index.js"
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^5.4.0"
+    "fastify": "^5.4.0",
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "@types/node": "^24.0.14",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts,js",
+  "ignore": ["dist", "**/*.test.ts", "node_modules"],
+  "exec": "tsc -p tsconfig.json && node dist/index.js"
+}
