@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  # api:
+  #   build: .
+  #   container_name: api
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - mongo
+  #     - redis
+  #   environment:
+  #     - MONGO_URI=mongodb://mongo:27017/queue-db
+  #     - REDIS_URL=redis://redis:6379
+  #   networks:
+  #     - study-network
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=queue-db
+    networks:
+      - study-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - study-network
+
+volumes:
+  mongo-data:
+  redis-data:
+
+networks:
+  study-network:
+    driver: bridge
