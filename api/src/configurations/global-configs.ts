@@ -2,8 +2,6 @@ import { FastifyServerOptions } from "fastify";
 import { RedisOptions } from "ioredis";
 import { ConnectOptions } from "mongoose";
 
-export const apiRoutePrefix: string = "/api";
-
 export const fastifyAppConfiguration: FastifyServerOptions = {
   logger: false,
   ignoreTrailingSlash: true,

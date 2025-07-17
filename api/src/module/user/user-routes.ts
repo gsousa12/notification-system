@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { CreateUserRequest, CreateUserResponse } from "./schema";
+import { CreateUserRequest, CreateUserResponse } from "./user-schema";
 import { createUserHandler } from "./user-controller";
 
 const userRoutesPrefix = "/users";

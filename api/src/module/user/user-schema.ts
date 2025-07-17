@@ -8,8 +8,9 @@ export const CreateUserRequest = Type.Object({
 });
 
 export const CreateUserResponse = Type.Object({
-  id: Type.String({ format: "uuid" }),
+  id: Type.String(),
   name: Type.String(),
+  error: Type.Optional(Type.String()),
 });
 
 export type CreateUserRequest = Static<typeof CreateUserRequest>;

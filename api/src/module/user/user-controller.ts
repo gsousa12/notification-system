@@ -1,13 +1,28 @@
-import { FastifyRequest } from "fastify";
-import { CreateUserRequest, CreateUserResponse } from "./schema";
-
-type createUserRequestType = { Body: CreateUserRequest };
+import { FastifyReply, FastifyRequest } from "fastify";
+import { CreateUserRequest, CreateUserResponse } from "./user-schema";
+import { User } from "./user-model";
 
 export const createUserHandler = async (
-  request: FastifyRequest<createUserRequestType>
-): Promise<CreateUserResponse> => {
-  return {
-    id: "123e4567-e89b-12d3-a456-426614174000", // Example UUID
-    name: request.body.name,
-  };
+  request: FastifyRequest<{ Body: CreateUserRequest }>,
+  reply: FastifyReply
+) => {
+  try {
+    const { name, email, password, amount } = request.body;
+
+    if (await User.findOne({ email })) {
+      return reply.code(409).send({ error: "Email already registered" });
+    }
+
+    const newUser = await User.create({ name, email, password, amount });
+
+    const response: CreateUserResponse = {
+      id: (newUser._id as string).toString(),
+      name: newUser.name,
+    };
+
+    return reply.code(201).send(response);
+  } catch (error) {
+    request.log.error(error);
+    return reply.code(500).send({ error: "Error creating user" });
+  }
 };
