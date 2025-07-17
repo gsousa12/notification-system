@@ -7,5 +7,5 @@ export const fastifyAppConfiguration = {
 
 export const environment = {
   // fixme: use dotenv to load environment variables
-  port: Number(process.env.PORT) || 9999,
+  port: Number(process.env.PORT) || 3000,
 };
