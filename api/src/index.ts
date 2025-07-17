@@ -1,13 +1,16 @@
-import { server } from "./server";
+import { environment } from "./configurations/global-configs";
+import { buildApp } from "./server";
 
-server.get("/ping", async (request, reply) => {
-  return "oi\n";
-});
+const app = buildApp();
 
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err);
+const start = async () => {
+  try {
+    await app.listen({ port: environment.port });
+    console.log(`Server running on http://localhost:${environment.port}`);
+  } catch (err) {
+    app.log.error(err);
     process.exit(1);
   }
-  console.log(`Server listening at ${address}`);
-});
+};
+
+start();
