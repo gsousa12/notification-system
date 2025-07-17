@@ -1,9 +1,9 @@
 import fastify from "fastify";
-import { userRoutes } from "./routes/user/routes";
 import {
   fastifyAppConfiguration,
   apiRoutePrefix,
 } from "./configurations/global-configs";
+import { userRoutes } from "./module/user/user-routes";
 
 export const buildApp = () => {
   const app = fastify(fastifyAppConfiguration);
