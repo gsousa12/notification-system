@@ -3,7 +3,7 @@ import { Static, Type } from "@sinclair/typebox";
 export const CreateTransactionRequest = Type.Object({
   senderId: Type.String({ format: "uuid" }),
   receiverId: Type.String({ format: "uuid" }),
-  amount: Type.Number({ minimum: 0 }),
+  amount: Type.Number({ minimum: 100 }),
 });
 
 export const CreateTransactionResponse = Type.Object({
