@@ -46,7 +46,6 @@ export class NotificationWorker {
       await notification.save();
       this.fastifyApp.log.info(`📬 Notificação salva: ${notificationId}`);
 
-      // 2. Envia via WebSocket
       let sentViaWebSocket = false;
       try {
         this.fastifyApp.notify(userId, {
