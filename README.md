@@ -1,10 +1,11 @@
 **Sistema de Notificações com Garantia de Entrega**  
-*Stack: Fastify (Node) + BullMQ (Redis) + ReactJs*  
+*Stack: Fastify (Node) + BullMQ (Redis) + Mongo + ReactJs*  
 
 Arquitetura fullstack para entrega confiável de notificações com:  
 - Filas persistentes e retry de falhas (BullMQ)  
-- API otimizada com Fastify  
-- Client ReactJs com real-time via Socket.io  
+- API otimizada com Fastify
+- Mongo como Database
+- Client ReactJs com real-time via WebSockets 
 - Mecanismos de DLQ e replay de mensagens  
 
 A aplicação simula transferências bancárias com taxa de falha configurável de 30%. 
