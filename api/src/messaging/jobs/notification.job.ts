@@ -18,13 +18,12 @@ export interface NotificationJobResult {
   error?: string;
 }
 
-// Configurações específicas para jobs de notificação
 export const NOTIFICATION_JOB_OPTIONS = {
   attempts: 3,
   backoff: {
     type: "exponential" as const,
-    delay: 2000, // 2s, 4s, 8s
+    delay: 2000,
   },
-  removeOnComplete: 50, // manter últimas 50 completas
-  removeOnFail: 100, // manter últimas 100 falhas para debug
+  removeOnComplete: 50,
+  removeOnFail: 100,
 };

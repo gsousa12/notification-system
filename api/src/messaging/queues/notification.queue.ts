@@ -13,7 +13,6 @@ export const notificationQueue = new Queue<CreateNotificationJob>(
   }
 );
 
-// Helper para adicionar jobs na fila
 export const addNotificationJob = async (
   jobData: CreateNotificationJob,
   options?: {
@@ -27,7 +26,6 @@ export const addNotificationJob = async (
   });
 };
 
-// Helper para jobs de alta prioridade (ex: falhas de transação)
 export const addUrgentNotificationJob = async (
   jobData: CreateNotificationJob
 ) => {

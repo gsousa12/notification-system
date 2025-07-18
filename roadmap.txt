@@ -1,0 +1,27 @@
+Adicionar plugin websocket em app.ts
+Criar filas e workers (transaction, notification)
+Refatorar transaction-controller para 202 + enqueue
+Criar models/schemas de Notification
+Implementar workers com falha 30 %, retries, DLQ
+Scripts de replay
+Endpoints REST auxiliares (GET notifications, replay DLQ opcional)
+No React: provider de Socket, toasts, lista histórica
+Carga de teste: seed de usuários + job flood para validar throughput
+
+Persistência em MongoDB
+• Já previmos criar um modelo Notification (coleção própria).
+• A gravação ocorrerá dentro do notification-worker; ele será responsável por:
+a) inserir o documento;
+b) emitir o evento WebSocket.
+➞ Nada a mudar, apenas implementar o worker e o modelo.
+Atualização em tempo real no front sem refresh
+• Com o WebSocket ativo (/ws?userId=…) o React receberá cada mensagem enviada por fastify.notify.
+• Para “catch-up” quando o usuário abre a página, o front chamará GET /notifications (últimas N) e depois só escuta o WS.
+➞ Fluxo já contemplado—só lembrar de criar as rotas REST de listagem e “marcar como lida”.
+Uso do BullMQ para garantir entrega mesmo sob carga
+• Fila transactionQueue processa transações e, ao terminar, cria jobs em notificationQueue.
+• Fila notificationQueue grava no Mongo e dispara o WS.
+• Se o notification-worker rodar em OUTRO processo que não tem as conexões WebSocket em memória, precisamos de um “bridge”:
+a) Worker publica no Redis (PUBLISH notifications …) após gravar no Mongo;
+b) O processo HTTP, que tem o plugin WS carregado, está inscrito nesse canal e, ao receber, faz fastify.notify.
+➞ Só esse bridge é obrigatório se os workers forem separados; se eles rodarem no mesmo processo que o HTTP, não precisamos mudar nada.

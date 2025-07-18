@@ -24,7 +24,6 @@ import {
 const notificationRoutesPrefix = "/notification";
 
 export async function notificationRoutes(fastify: FastifyInstance) {
-  // Criar notificação
   fastify.route({
     method: "POST",
     url: `${notificationRoutesPrefix}/`,
@@ -39,12 +38,11 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: createNotificationHandler,
   });
 
-  // Listar notificações do usuário
   fastify.route({
     method: "GET",
     url: `${notificationRoutesPrefix}/user/:userId`,
     schema: {
-      params: GetNotificationsParams, // 🆕 usando TypeBox
+      params: GetNotificationsParams,
       querystring: GetNotificationsQuery,
       response: {
         200: GetNotificationsResponse,
@@ -55,12 +53,11 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: getNotificationsHandler,
   });
 
-  // Marcar notificação como lida
   fastify.route({
     method: "PATCH",
     url: `${notificationRoutesPrefix}/user/:userId/:notificationId/read`,
     schema: {
-      params: MarkAsReadParams, // 🆕 usando TypeBox
+      params: MarkAsReadParams,
       response: {
         200: MarkAsReadResponse,
         404: ErrorResponse,
@@ -70,12 +67,11 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: markAsReadHandler,
   });
 
-  // Marcar todas como lidas
   fastify.route({
     method: "PATCH",
     url: `${notificationRoutesPrefix}/user/:userId/read-all`,
     schema: {
-      params: MarkAllAsReadParams, // 🆕 usando TypeBox
+      params: MarkAllAsReadParams,
       response: {
         200: MarkAllAsReadResponse,
         500: ErrorResponse,
@@ -84,12 +80,11 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: markAllAsReadHandler,
   });
 
-  // Contar não lidas
   fastify.route({
     method: "GET",
     url: `${notificationRoutesPrefix}/user/:userId/unread-count`,
     schema: {
-      params: UnreadCountParams, // 🆕 usando TypeBox
+      params: UnreadCountParams,
       response: {
         200: UnreadCountResponse,
         500: ErrorResponse,

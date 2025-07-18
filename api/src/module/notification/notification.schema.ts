@@ -1,7 +1,6 @@
 import { Static, Type } from "@sinclair/typebox";
 import { ENotificationType } from "./notification.model";
 
-// Schemas existentes...
 export const CreateNotificationRequest = Type.Object({
   userId: Type.String({ format: "uuid" }),
   title: Type.String({ maxLength: 100 }),
@@ -17,7 +16,6 @@ export const CreateNotificationResponse = Type.Object({
   createdAt: Type.String({ format: "date-time" }),
 });
 
-// 🆕 Schemas corrigidos com TypeBox
 export const GetNotificationsQuery = Type.Object({
   page: Type.Optional(Type.Integer({ minimum: 1, default: 1 })),
   limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 100, default: 20 })),

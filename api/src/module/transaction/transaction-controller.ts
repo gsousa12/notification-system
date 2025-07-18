@@ -23,7 +23,6 @@ export const createTransactionHandler = async (
   const { senderId, receiverId, amount } = request.body;
 
   try {
-    // 1. Validações existentes
     const sender = await User.findOne({ id: senderId });
     const receiver = await User.findOne({ id: receiverId });
 
@@ -35,7 +34,6 @@ export const createTransactionHandler = async (
       return reply.code(400).send({ error: "Insufficient balance" });
     }
 
-    // 2. 🆕 Notificação: transação enviada (imediata)
     await addNotificationJob({
       userId: senderId,
       title: "Transação Enviada",
@@ -50,11 +48,10 @@ export const createTransactionHandler = async (
       },
     });
 
-    // 3. Simula processamento com 30% de falha
-    const success = Math.random() > 0.3; // 70% sucesso
+    const success = Math.random() > 0.3;
 
     if (success) {
-      // 3a. Processa transação (seu código existente)
+      await new Promise((resolve) => setTimeout(resolve, 12000)); // Simulate processing delay
       const newTransaction = await Transaction.create({
         transactionId,
         senderId,
@@ -68,7 +65,6 @@ export const createTransactionHandler = async (
       await sender.save();
       await receiver.save();
 
-      // 3b. 🆕 Notificações de sucesso (enfileiradas)
       await Promise.all([
         addNotificationJob({
           userId: senderId,
@@ -90,8 +86,7 @@ export const createTransactionHandler = async (
 
       return reply.code(201).send(newTransaction);
     } else {
-      // 3c. Simula falha na transação
-      const failedTransaction = await Transaction.create({
+      await Transaction.create({
         transactionId,
         senderId,
         receiverId,
@@ -99,7 +94,6 @@ export const createTransactionHandler = async (
         status: ETransactionStatus.FAILED,
       });
 
-      // 3d. 🆕 Notificação de falha (alta prioridade)
       await addUrgentNotificationJob({
         userId: senderId,
         title: "Transação Falhou",
@@ -119,7 +113,6 @@ export const createTransactionHandler = async (
   } catch (error) {
     request.log.error(error);
 
-    // 🆕 Notificação de erro crítico
     try {
       await addUrgentNotificationJob({
         userId: senderId,

@@ -18,7 +18,7 @@ export class NotificationWorker {
       "notifications",
       this.processNotification.bind(this),
       {
-        connection: redisClient, // usa seu cliente Redis existente
+        connection: redisClient,
         concurrency: 5,
       }
     );
@@ -33,7 +33,6 @@ export class NotificationWorker {
     const notificationId = crypto.randomUUID();
 
     try {
-      // 1. Persiste no MongoDB
       const notification = new Notification({
         notificationId,
         userId,
