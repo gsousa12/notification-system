@@ -1,8 +1,10 @@
-import { Redis } from "ioredis";
-import {
-  environment,
-  redisConfiguration,
-} from "../../configurations/global-configs";
+import { Redis, RedisOptions } from "ioredis";
+import { environment } from "../../configs";
+
+export const redisConfiguration: RedisOptions = {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+};
 
 export const redisClient = new Redis(environment.redisUrl, redisConfiguration);
 

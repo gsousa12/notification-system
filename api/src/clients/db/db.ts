@@ -1,8 +1,10 @@
-import mongoose from "mongoose";
-import {
-  environment,
-  mongoConfiguration,
-} from "../../configurations/global-configs";
+import mongoose, { ConnectOptions } from "mongoose";
+import { environment } from "../../configs";
+
+export const mongoConfiguration: ConnectOptions = {
+  dbName: "queue-db",
+  serverSelectionTimeoutMS: 5000,
+};
 
 export const connectDB = async (): Promise<void> => {
   try {

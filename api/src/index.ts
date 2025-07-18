@@ -1,7 +1,7 @@
-import { environment } from "./configurations/global-configs";
+import { environment } from "./configs";
 import { buildApp } from "./app";
 import { connectDB, disconnectDB } from "./clients/db/db";
-import { redisClient } from "./clients/redis/redis";
+import { redisClient } from "./adapters/redis/redis";
 
 const start = async () => {
   try {
@@ -11,7 +11,8 @@ const start = async () => {
     const app = buildApp();
 
     await app.listen({
-      port: environment.port,
+      // port: environment.port,
+      port: 3000,
       host: "0.0.0.0",
     });
 
