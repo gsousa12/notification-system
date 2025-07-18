@@ -18,24 +18,24 @@ const TransactionSchema = new Schema<ITransaction>(
   {
     transactionId: {
       type: String,
-      required: [true, "Transaction ID is required"],
+      required: true,
       unique: true,
       trim: true,
     },
     senderId: {
       type: String,
-      required: [true, "Sender ID is required"],
+      required: true,
       trim: true,
     },
     receiverId: {
       type: String,
-      required: [true, "Receiver ID is required"],
+      required: true,
       trim: true,
     },
     amount: {
       type: Number,
-      required: [true, "Amount is required"],
-      min: [0, "Amount must be a positive number"],
+      required: true,
+      min: 100,
     },
     status: {
       type: String,
