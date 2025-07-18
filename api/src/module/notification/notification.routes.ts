@@ -3,9 +3,13 @@ import {
   CreateNotificationRequest,
   CreateNotificationResponse,
   GetNotificationsQuery,
+  GetNotificationsParams,
   GetNotificationsResponse,
   MarkAsReadParams,
   MarkAsReadResponse,
+  MarkAllAsReadParams,
+  MarkAllAsReadResponse,
+  UnreadCountParams,
   UnreadCountResponse,
 } from "./notification.schema";
 import { ErrorResponse } from "../user/user-schema";
@@ -20,6 +24,7 @@ import {
 const notificationRoutesPrefix = "/notification";
 
 export async function notificationRoutes(fastify: FastifyInstance) {
+  // Criar notificação
   fastify.route({
     method: "POST",
     url: `${notificationRoutesPrefix}/`,
@@ -34,11 +39,12 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: createNotificationHandler,
   });
 
+  // Listar notificações do usuário
   fastify.route({
     method: "GET",
     url: `${notificationRoutesPrefix}/user/:userId`,
     schema: {
-      params: { userId: { type: "string", format: "uuid" } },
+      params: GetNotificationsParams, // 🆕 usando TypeBox
       querystring: GetNotificationsQuery,
       response: {
         200: GetNotificationsResponse,
@@ -49,11 +55,12 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: getNotificationsHandler,
   });
 
+  // Marcar notificação como lida
   fastify.route({
     method: "PATCH",
     url: `${notificationRoutesPrefix}/user/:userId/:notificationId/read`,
     schema: {
-      params: MarkAsReadParams,
+      params: MarkAsReadParams, // 🆕 usando TypeBox
       response: {
         200: MarkAsReadResponse,
         404: ErrorResponse,
@@ -63,30 +70,26 @@ export async function notificationRoutes(fastify: FastifyInstance) {
     handler: markAsReadHandler,
   });
 
+  // Marcar todas como lidas
   fastify.route({
     method: "PATCH",
     url: `${notificationRoutesPrefix}/user/:userId/read-all`,
     schema: {
-      params: { userId: { type: "string", format: "uuid" } },
+      params: MarkAllAsReadParams, // 🆕 usando TypeBox
       response: {
-        200: {
-          type: "object",
-          properties: {
-            message: { type: "string" },
-            modifiedCount: { type: "integer" },
-          },
-        },
+        200: MarkAllAsReadResponse,
         500: ErrorResponse,
       },
     },
     handler: markAllAsReadHandler,
   });
 
+  // Contar não lidas
   fastify.route({
     method: "GET",
     url: `${notificationRoutesPrefix}/user/:userId/unread-count`,
     schema: {
-      params: { userId: { type: "string", format: "uuid" } },
+      params: UnreadCountParams, // 🆕 usando TypeBox
       response: {
         200: UnreadCountResponse,
         500: ErrorResponse,

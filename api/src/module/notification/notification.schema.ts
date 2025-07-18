@@ -1,6 +1,7 @@
 import { Static, Type } from "@sinclair/typebox";
 import { ENotificationType } from "./notification.model";
 
+// Schemas existentes...
 export const CreateNotificationRequest = Type.Object({
   userId: Type.String({ format: "uuid" }),
   title: Type.String({ maxLength: 100 }),
@@ -16,10 +17,15 @@ export const CreateNotificationResponse = Type.Object({
   createdAt: Type.String({ format: "date-time" }),
 });
 
+// 🆕 Schemas corrigidos com TypeBox
 export const GetNotificationsQuery = Type.Object({
   page: Type.Optional(Type.Integer({ minimum: 1, default: 1 })),
   limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 100, default: 20 })),
   unreadOnly: Type.Optional(Type.Boolean({ default: false })),
+});
+
+export const GetNotificationsParams = Type.Object({
+  userId: Type.String({ format: "uuid" }),
 });
 
 export const GetNotificationsResponse = Type.Object({
@@ -55,12 +61,29 @@ export const MarkAsReadResponse = Type.Object({
   updatedAt: Type.String({ format: "date-time" }),
 });
 
+export const MarkAllAsReadParams = Type.Object({
+  userId: Type.String({ format: "uuid" }),
+});
+
+export const MarkAllAsReadResponse = Type.Object({
+  message: Type.String(),
+  modifiedCount: Type.Integer(),
+});
+
+export const UnreadCountParams = Type.Object({
+  userId: Type.String({ format: "uuid" }),
+});
+
 export const UnreadCountResponse = Type.Object({
   unreadCount: Type.Integer(),
 });
 
+// Types
 export type CreateNotificationRequest = Static<
   typeof CreateNotificationRequest
 >;
 export type GetNotificationsQuery = Static<typeof GetNotificationsQuery>;
+export type GetNotificationsParams = Static<typeof GetNotificationsParams>;
 export type MarkAsReadParams = Static<typeof MarkAsReadParams>;
+export type MarkAllAsReadParams = Static<typeof MarkAllAsReadParams>;
+export type UnreadCountParams = Static<typeof UnreadCountParams>;

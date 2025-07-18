@@ -2,8 +2,11 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { INotification, Notification } from "./notification.model";
 import {
   CreateNotificationRequest,
+  GetNotificationsParams,
   GetNotificationsQuery,
+  MarkAllAsReadParams,
   MarkAsReadParams,
+  UnreadCountParams,
 } from "./notification.schema";
 
 export const createNotificationHandler = async (
@@ -39,7 +42,7 @@ export const createNotificationHandler = async (
 
 export const getNotificationsHandler = async (
   request: FastifyRequest<{
-    Params: { userId: string };
+    Params: GetNotificationsParams;
     Querystring: GetNotificationsQuery;
   }>,
   reply: FastifyReply
@@ -110,7 +113,7 @@ export const markAsReadHandler = async (
 
 export const markAllAsReadHandler = async (
   request: FastifyRequest<{
-    Params: { userId: string };
+    Params: MarkAllAsReadParams;
   }>,
   reply: FastifyReply
 ) => {
@@ -134,7 +137,7 @@ export const markAllAsReadHandler = async (
 
 export const getUnreadCountHandler = async (
   request: FastifyRequest<{
-    Params: { userId: string };
+    Params: UnreadCountParams;
   }>,
   reply: FastifyReply
 ) => {

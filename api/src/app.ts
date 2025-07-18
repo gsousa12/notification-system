@@ -2,6 +2,7 @@ import fastify, { FastifyServerOptions } from "fastify";
 import { userRoutes } from "./module/user/user-routes";
 import { transactionRoutes } from "./module/transaction/transaction-routes";
 import websocketPlugin from "./adapters/websocket/websocket";
+import { notificationRoutes } from "./module/notification/notification.routes";
 
 export const fastifyAppConfiguration: FastifyServerOptions = {
   logger: true,
@@ -16,11 +17,6 @@ export const buildApp = () => {
   app.register(websocketPlugin);
   app.register(userRoutes, { prefix: apiRoutePrefix });
   app.register(transactionRoutes, { prefix: apiRoutePrefix });
-  app.get("/debug/notify", async (req, reply) => {
-    const { userId = "test" } = req.query as { userId?: string };
-    app.notify(userId, { title: "Ping!", message: "Hello WS" });
-    return reply.send({ ok: true });
-  });
-  app.printRoutes();
+  app.register(notificationRoutes, { prefix: apiRoutePrefix });
   return app;
 };
