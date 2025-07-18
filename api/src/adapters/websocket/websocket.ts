@@ -1,4 +1,3 @@
-// src/adapters/websocket/websocket.ts
 import fp from "fastify-plugin";
 import websocket from "@fastify/websocket";
 import type { FastifyInstance, FastifyRequest } from "fastify";
@@ -11,12 +10,12 @@ declare module "fastify" {
 }
 
 export default fp(async function websocketPlugin(fastify: FastifyInstance) {
-  // 1) registra o plugin WS
+  // registra o plugin WS
   await fastify.register(websocket, {
     options: { clientTracking: true },
   });
 
-  // 2) rota de upgrade WebSocket
+  // rota de upgrade WebSocket
   fastify.get(
     "/ws",
     { websocket: true },
@@ -52,7 +51,7 @@ export default fp(async function websocketPlugin(fastify: FastifyInstance) {
     }
   );
 
-  // 3) helper global: envia só p/ sockets com matching userId
+  // helper global: envia só p/ sockets com matching userId
   fastify.decorate("notify", (userId: string, payload: any) => {
     const msg = JSON.stringify({ event: "notification", data: payload });
 
