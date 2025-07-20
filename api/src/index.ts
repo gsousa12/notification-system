@@ -24,7 +24,6 @@ const start = async () => {
     process.on("SIGINT", async () => {
       console.log("🛑 Shutting down gracefully...");
 
-      // Fecha worker primeiro (para não aceitar novos jobs)
       await notificationWorker.close();
       console.log("📬 Notification worker closed");
 
