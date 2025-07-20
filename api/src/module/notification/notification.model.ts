@@ -1,4 +1,3 @@
-// src/models/notification.model.ts
 import { Schema, model, Document } from "mongoose";
 
 export enum ENotificationType {
